@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import ShelfForm from './ShelfForm/ShelfForm.js';
+import axios from 'axios';
 
 import Nav from '../../components/Nav/Nav';
 import { USER_ACTIONS } from '../../redux/actions/userActions';
 
 const mapStateToProps = state => ({
   user: state.user,
+  shelf: state.shelf,
 });
 
 class InfoPage extends Component {
@@ -20,15 +22,49 @@ class InfoPage extends Component {
     }
   }
 
+  getShelf() {
+    axios({
+      method: 'GET',
+      url: '/api/shelf' 
+    }).then((response) => {
+      const action  = {type: 'SET_SHELF', payload: response.data}
+      this.props.dispatch(action)
+      // setstate replaced by dispatch
+      // this.setState({
+      //   ...this.state,
+      //   todos: response.data,
+      // });
+    });
+  }
+
   render() {
     let content = null;
 
     if (this.props.user.userName) {
       content = (
-        <div>
-          <p>
-            Info Page
-          </p>
+        <div>Shelf Items:
+          <br/>
+          <br/>
+          <table>
+            <thead>
+              <th>Description</th>
+              <th>Image</th>
+            </thead>
+            <tbody>
+             
+                {this.props.shelf.shelfReducer.map((item) =>{
+                  return(
+                    <tr>
+                    <td key={item.id}>{item.description}</td>
+                    <td key={item.id}>{item.image_url}</td>
+                    </tr>
+                  )
+                })}
+              
+            </tbody>
+
+          </table>
+            
           <ShelfForm />
         </div>
       );

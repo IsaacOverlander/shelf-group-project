@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-
 const mapStateToProps = reduxState => ({
     reduxState
 })
@@ -23,6 +22,8 @@ class ShelfForm extends Component {
         });
     }
     
+
+
     handleSubmit = (event) => {
         event.preventDefault();
         const action = { type: 'SET_SHELF', payload: this.state }

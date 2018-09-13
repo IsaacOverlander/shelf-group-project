@@ -19,17 +19,30 @@ class ShelfForm extends Component {
 
     handleSubmit = (event) => {
         event.preventDefault();
-        const action = {type: 'SET_SHELF', payload: this.state}
+        const action = { type: 'SET_SHELF', payload: this.state }
         console.log(action);
     };
 
     // ** FUNCTIONS **
     render() {
         return (
-            <div>Hello World</div>
-            // ** FORM **
+            <div>
+                {/* // ** FORM ** */}
 
-            // ** FORM **
+                <form onSubmit={this.handleSubmit}>
+
+                    <label>Description:</label>
+                    <input type="text" name="description" value={this.state.description} onChange={this.handleChange} />
+
+                    <label>Image:</label>
+                    <input type="text" name="image_url" value={this.state.image_url} onChange={this.handleChange} />
+
+                    <input type="submit" />
+                </form>
+
+
+                {/* // ** FORM ** */}
+            </div>
         )
     }
 }

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import ShelfForm from './ShelfForm/ShelfForm.js';
-import axios from 'axios';
+// import axios from 'axios';
 
 import Nav from '../../components/Nav/Nav';
 import { USER_ACTIONS } from '../../redux/actions/userActions';
@@ -32,12 +32,7 @@ class InfoPage extends Component {
   }
 
   deleteItem = (id) => {
-    axios({
-      method: 'DELETE',
-      url: '/api/shelf/'+ id
-    }).then((response)=>{
-      this.getShelf();
-    })
+    this.props.dispatch({ type: 'DELETE_ITEM', payload: id })
 
   }
 
@@ -49,15 +44,57 @@ class InfoPage extends Component {
   }
 
   getShelf() {
-    axios({
-      method: 'GET',
-      url: '/api/shelf'
-    }).then((response) => {
-      const action = { type: 'SET_SHELF', payload: response.data }
-      this.props.dispatch(action)
 
-    });
+    this.props.dispatch({ type: 'FETCH_SHELF' })
+    // axios({
+    //   method: 'GET',
+    //   url: '/api/shelf'
+    // }).then((response) => {
+    //   const action = { type: 'SET_SHELF', payload: response.data }
+    //   this.props.dispatch(action)
+
+    // });
   }
+
+//   function* rootSaga() {
+//     // step 8 takeEvery will listen for specific actions
+//     // when we get an action of type 'FETCH_BASKET', call getBasketSaga
+//     // first param of takeEvery takes an action.type
+//     yield takeEvery('FETCH_BASKET', getBasketSaga);
+//     // when we dispatch 'ADD_BASKET_ITEM' , call postBasketSaga
+//     yield takeEvery('ADD_BASKET_ITEM', postBasketSaga);
+
+// }
+//  // add basket item and then call FETCH_BASKET
+// function* postBasketSaga(action) {
+//     try {
+//         // post to /fruit with data of action.payload
+//         yield call(axios.post, '/fruit', action.payload);
+//         // put dispatches an action
+//         yield put({ type: 'FETCH_BASKET' });
+//     } catch (error) {
+//         console.log(error);
+//         alert('unable to add item');
+//     }
+// }
+
+// // step 6 create individual sagas
+// function* getBasketSaga(action) {
+//     // similar to reducers sagas will get an action
+//     console.log('get basket saga with action: ', action);
+//     try {
+//         // step 12 making http req to server
+//         const basketResponse = yield call(axios.get, '/fruit');
+//         // basketResponse is our response from server
+//         // step 13 dispatch an action and send to redux
+//         const responseAction = { type: 'SET_BASKET', payload: basketResponse.data };
+//         yield put(responseAction);
+//     } catch (error) {
+//         // notify user something went wrong
+//         alert('unable to get basket');
+//         console.log(error);
+//     }
+// }
 
   render() {
     let content = null;
@@ -81,10 +118,10 @@ class InfoPage extends Component {
             <tbody>
               {this.props.shelf.shelfReducer.map((item) => {
                 return (
-                  <tr>
-                    <td key={item.id}>{item.username}</td>
-                    <td key={item.id}>{item.description}</td>
-                    <td key={item.id}> <img src={item.image_url} alt={item.description}/></td>
+                  <tr key={item.id}>
+                    <td>{item.username}</td>
+                    <td>{item.description}</td>
+                    <td> <img src={item.image_url} alt={item.description}/></td>
                     <td><button onClick={() => this.deleteItem(item.id)}>Delete</button></td>
                   </tr>
                 )

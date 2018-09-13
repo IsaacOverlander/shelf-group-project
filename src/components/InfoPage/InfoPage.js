@@ -64,10 +64,14 @@ class InfoPage extends Component {
 
     if (this.props.user.userName) {
       content = (
-        <div>Shelf Items:
+        <div>
+          <ShelfForm />
           <br />
           <br />
+          Shelf Items:
           <table>
+          <br />
+          <br />
             <thead>
               <tr>
                 <th>User Name</th>
@@ -77,7 +81,6 @@ class InfoPage extends Component {
               </tr>
             </thead>
             <tbody>
-              {JSON.stringify(this.props)}
               {this.props.shelf.shelfReducer.map((item) => {
                 return (
                   <tr>
@@ -93,7 +96,7 @@ class InfoPage extends Component {
 
           </table>
 
-          <ShelfForm />
+          
         </div>
       );
     }

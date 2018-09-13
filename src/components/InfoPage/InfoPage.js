@@ -44,7 +44,6 @@ class InfoPage extends Component {
   }
 
   getShelf() {
-
     this.props.dispatch({ type: 'FETCH_SHELF' })
   }
 

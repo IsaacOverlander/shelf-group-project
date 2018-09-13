@@ -12,28 +12,50 @@ const mapStateToProps = state => ({
 });
 
 class InfoPage extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      itemToDelete: '',
+    }
+
+  }
+
   componentDidMount() {
-    this.props.dispatch({type: USER_ACTIONS.FETCH_USER});
+    this.props.dispatch({ type: USER_ACTIONS.FETCH_USER });
   }
 
   componentDidUpdate() {
     if (!this.props.user.isLoading && this.props.user.userName === null) {
       this.props.history.push('home');
     }
+    this.getShelf();
+  }
+
+  deleteItem = (id) => {
+    axios({
+      method: 'DELETE',
+      url: '/api/shelf/'+ id
+    }).then((response)=>{
+      this.getShelf();
+    })
+
+  }
+
+  handleChange = (event) => {
+    this.setState({
+      ...this.state,
+      itemToDelete: event.target.value,
+    });
   }
 
   getShelf() {
     axios({
       method: 'GET',
-      url: '/api/shelf' 
+      url: '/api/shelf'
     }).then((response) => {
-      const action  = {type: 'SET_SHELF', payload: response.data}
+      const action = { type: 'SET_SHELF', payload: response.data }
       this.props.dispatch(action)
-      // setstate replaced by dispatch
-      // this.setState({
-      //   ...this.state,
-      //   todos: response.data,
-      // });
+
     });
   }
 
@@ -42,30 +64,39 @@ class InfoPage extends Component {
 
     if (this.props.user.userName) {
       content = (
-        <div>Shelf Items:
-          <br/>
-          <br/>
+        <div>
+          <ShelfForm />
+          <br />
+          <br />
+          Shelf Items:
           <table>
+          <br />
+          <br />
             <thead>
-              <th>Description</th>
-              <th>Image</th>
+              <tr>
+                <th>User Name</th>
+                <th>Description</th>
+                <th>Image</th>
+                <th>Delete</th>
+              </tr>
             </thead>
             <tbody>
-             
-                {this.props.shelf.shelfReducer.map((item) =>{
-                  return(
-                    <tr>
+              {this.props.shelf.shelfReducer.map((item) => {
+                return (
+                  <tr>
+                    <td key={item.id}>{item.username}</td>
                     <td key={item.id}>{item.description}</td>
-                    <td key={item.id}>{item.image_url}</td>
-                    </tr>
-                  )
-                })}
-              
+                    <td key={item.id}> <img src={item.image_url} /></td>
+                    <td><button onClick={() => this.deleteItem(item.id)}>Delete</button></td>
+                  </tr>
+                )
+              })}
+
             </tbody>
 
           </table>
-            
-          <ShelfForm />
+
+          
         </div>
       );
     }
@@ -73,7 +104,7 @@ class InfoPage extends Component {
     return (
       <div>
         <Nav />
-        { content }
+        {content}
       </div>
     );
   }

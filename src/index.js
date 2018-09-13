@@ -9,31 +9,6 @@ import reducer from './redux/reducers';
 
 import App from './App';
 import rootSaga from './redux/sagas';
-import {takeEvery , call , put } from 'redux-saga/effects'
-
-function* rootSaga(){
-
-yield takeEvery('FETCH_SHELF', getShelfSaga);
-
-}
-
-
-function* getShelfSaga(action){
-  try{
-    const shelfResponse = yield call(axios.get, '/api/shelf')
-
-    const responseAction = {type:'SET_SHELF' , payload: shelfResponse.data };
-    yield put(responseAction);
-  }
-  catch(error){
-    console.log('ERROR IN - getShelfSaga(); - index.js', error);
-    alert('unable to retrieve data');
-  }
-}
-
-
-
-
 
 
 

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import ShelfForm from './ShelfForm/ShelfForm.js';
 
 import Nav from '../../components/Nav/Nav';
 import { USER_ACTIONS } from '../../redux/actions/userActions';
@@ -28,6 +29,7 @@ class InfoPage extends Component {
           <p>
             Info Page
           </p>
+          <ShelfForm />
         </div>
       );
     }

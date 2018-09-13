@@ -6,7 +6,20 @@ const router = express.Router();
  * Get all of the items on the shelf
  */
 router.get('/', (req, res) => {
-    res.sendStatus(200); // For testing only, can be removed
+    if(req.isAuthenticated()){
+        const query = `SELECT "item".*, "person"."id" as person_id, "person"."username"
+                        FROM  "item"
+                        JOIN "person"
+                        ON "person"."id" = "item"."person_id";`;
+        pool.query(query).then((results) => {
+            res.send(results.rows); 
+        }).catch((error) => {
+            console.log('Error getting shelf items', error);
+            res.sendStatus(500);
+        });
+    } else {
+        res.sendStatus(403);
+    }
 });
 
 
@@ -22,7 +35,16 @@ router.post('/', (req, res) => {
  * Delete an item if it's something the logged in user added
  */
 router.delete('/:id', (req, res) => {
-
+    if(req.isAuthenticated()){
+        const query = `DELETE FROM "item" WHERE "id" = $1;`;
+        pool.query(query, [req.params.id]).then((results) => {
+            res.sendStatus(200); 
+        }).catch((error) => {
+            console.log(`Error deleting item with id of: ${req.params.id}`, error);
+        });
+    } else {
+        res.sendStatus(403); 
+    }
 });
 
 

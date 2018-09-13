@@ -16,6 +16,16 @@ function* fetchShelf() {
   }
 }
 
+function* addItem(action) {
+  try {
+    yield call(axios.post, '/api/shelf', action.payload);
+    yield put({type: 'FETCH_SHELF'});
+  } catch (error) {
+    console.log('error in post item saga', error);
+    alert('unable to add item')
+  }
+}
+
 function* deleteItem(action) {
   try {
 
@@ -31,7 +41,8 @@ function* deleteItem(action) {
 
 function* shelfSaga() {
   yield takeLatest('FETCH_SHELF', fetchShelf);
-  yield takeLatest('DELETE_ITEM', deleteItem)
+  yield takeLatest('DELETE_ITEM', deleteItem);
+  yield takeLatest('ADD_ITEM', addItem);
 }
 
 

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import axios from 'axios';
 
 const mapStateToProps = reduxState => ({
     reduxState
@@ -27,17 +26,7 @@ class ShelfForm extends Component {
 
     handleSubmit = (event) => {
         event.preventDefault();
-        axios({
-           method: 'POST',
-           url: '/api/shelf',
-           data: this.state 
-        }).then((response) => {
-            console.log('Item was added');
-            // GET function goes here
-        }).catch((error) => {
-            console.log(error);
-            alert('there was an error adding your item');
-        });
+            this.props.dispatch({type: 'ADD_ITEM', payload: this.state});
     };
 
     // ** FUNCTIONS **

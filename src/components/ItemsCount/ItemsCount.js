@@ -25,10 +25,10 @@ class ItemsCount extends Component {
     render(){
         return(
             <ul>
-                {JSON.stringify(this.props)}
-                {this.props.shelf.shelfReducer.map((item) => {
+                {/* {JSON.stringify(this.props.shelf)} */}
+                {this.props.shelf.shelfReducer.map((item, i) => {
                     return (
-                        <li>{item.username}: {item.count}</li>
+                        <li key={i}>{item.username}: {item.count}</li>
                         );
                     })}  
                 </ul>

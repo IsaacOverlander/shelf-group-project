@@ -22,13 +22,13 @@ class InfoPage extends Component {
 
   componentDidMount() {
     this.props.dispatch({ type: USER_ACTIONS.FETCH_USER });
+    this.getShelf();
   }
 
   componentDidUpdate() {
     if (!this.props.user.isLoading && this.props.user.userName === null) {
       this.props.history.push('home');
     }
-    this.getShelf();
   }
 
   deleteItem = (id) => {
@@ -70,8 +70,6 @@ class InfoPage extends Component {
           <br />
           Shelf Items:
           <table>
-          <br />
-          <br />
             <thead>
               <tr>
                 <th>User Name</th>
@@ -86,7 +84,7 @@ class InfoPage extends Component {
                   <tr>
                     <td key={item.id}>{item.username}</td>
                     <td key={item.id}>{item.description}</td>
-                    <td key={item.id}> <img src={item.image_url} /></td>
+                    <td key={item.id}> <img src={item.image_url} alt={item.description}/></td>
                     <td><button onClick={() => this.deleteItem(item.id)}>Delete</button></td>
                   </tr>
                 )

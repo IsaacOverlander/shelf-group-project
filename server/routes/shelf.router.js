@@ -5,6 +5,8 @@ const router = express.Router();
 /**
  * Get all of the items on the shelf
  */
+
+ 
 router.get('/', (req, res) => {
     if(req.isAuthenticated()){
         const query = `SELECT "item".*, "person"."id" as person_id, "person"."username"
@@ -21,6 +23,7 @@ router.get('/', (req, res) => {
         res.sendStatus(403);
     }
 });
+
 
 
 /**

@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
 
-
 const mapStateToProps = reduxState => ({
     reduxState
 })
@@ -24,6 +23,8 @@ class ShelfForm extends Component {
         });
     }
     
+
+
     handleSubmit = (event) => {
         event.preventDefault();
         axios({

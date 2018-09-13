@@ -2,14 +2,13 @@ import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios'; 
 
-const mapStateToProps = reduxState => ({
-    reduxState,
+const mapStateToProps = state => ({
+    shelf: state.shelf,
 });
 
 class ItemsCount extends Component {
     componentDidMount() {
-        // const action = {};
-        // this.props.dispatch(action); 
+       this.getCount();
     }
 
     getCount = () => {
@@ -26,7 +25,8 @@ class ItemsCount extends Component {
     render(){
         return(
             <ul>
-                {this.props.reduxState.shelfReducer.map((item) => {
+                {JSON.stringify(this.props)}
+                {this.props.shelf.shelfReducer.map((item) => {
                     return (
                         <li>{item.username}: {item.count}</li>
                         );

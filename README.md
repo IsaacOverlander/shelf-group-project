@@ -4,7 +4,7 @@ Lars
 Justin
 Isaac
 
-{images/Hover.jpeg}
+![alt hover cat](images/Hover.jpeg)
 
 
 # REACT AUTH SHELF

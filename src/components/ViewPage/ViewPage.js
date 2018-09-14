@@ -1,60 +1,48 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import axios from 'axios';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
 
 const mapStateToProps = state => ({
     shelf: state.shelf
 })
 
-
 class ViewPage extends Component {
 
     componentDidMount() {
-        this.getShelf();
+        this.props.dispatch({type: 'FETCH_SHELF'});
     }
-
-
-    getShelf() {
-        axios({
-            method: 'GET',
-            url: '/api/shelf'
-        }).then((response) => {
-            const action = { type: 'SET_SHELF', payload: response.data }
-            this.props.dispatch(action)
-
-        });
-    }
-
-
 
     render() {
         return (
             <div>
                 Shelf Items:
-            <table>
-                    <thead>
-                        <tr>
-                            <th>User Name</th>
-                            <th>Description</th>
-                            <th>Image</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {this.props.shelf.shelfReducer.map((item) => {
-                            return (
-                                <tr key={item.id}>
-                                    <td >{item.username}</td>
-                                    <td>{item.description}</td>
-                                    <td> <img src={item.image_url} alt={item.description} /></td>
-                                </tr>
-                            )
-                        })}
-
-                    </tbody>
-
-                </table>
-
-
+                <Paper>
+                    <Table>
+                        <TableHead>
+                            <TableRow>
+                                <TableCell>User Name</TableCell>
+                                <TableCell>Description</TableCell>
+                                <TableCell>Image</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {this.props.shelf.shelfReducer.map((item) => {
+                                return (
+                                    <TableRow key={item.id}>
+                                        <TableCell >{item.username}</TableCell>
+                                        <TableCell>{item.description}</TableCell>
+                                        <TableCell> <img src={item.image_url} alt={item.description} height="100px"/></TableCell>
+                                    </TableRow>
+                                )
+                            })}
+                        </TableBody>
+                    </Table>
+                </Paper>
             </div>
         )
     }

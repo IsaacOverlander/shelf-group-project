@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import Button from '@material-ui/core/Button';
+import Input from '@material-ui/core/Input';
+import InputLabel from '@material-ui/core/InputLabel';
 
 const mapStateToProps = reduxState => ({
     reduxState
 })
 
 class ShelfForm extends Component {
-    // ** FUNCTIONS ** 
+    
     constructor() {
         super();
         this.state = {
@@ -29,25 +32,18 @@ class ShelfForm extends Component {
             this.props.dispatch({type: 'ADD_ITEM', payload: this.state});
     };
 
-    // ** FUNCTIONS **
     render() {
         return (
             <div>
-                {/* // ** FORM ** */}
+                <form id="shelf-form" onSubmit={this.handleSubmit}>
 
-                <form onSubmit={this.handleSubmit}>
-
-                    <label>Description:</label>
-                    <input type="text" name="description" value={this.state.description} onChange={this.handleChange} />
+                    <InputLabel>Description:</InputLabel>
+                    <Input type="text" name="description" value={this.state.description} onChange={this.handleChange} />
                     <br />
-                    <label>Image:</label>
-                    <input type="text" name="image_url" value={this.state.image_url} onChange={this.handleChange} />
-
-                    <input type="submit" />
+                    <InputLabel>Image:</InputLabel>
+                    <Input type="text" name="image_url" value={this.state.image_url} onChange={this.handleChange} />
+                    <Button className="float-right" variant="contained" color="primary" type="submit">Add Item</Button>
                 </form>
-
-
-                {/* // ** FORM ** */}
             </div>
         )
     }

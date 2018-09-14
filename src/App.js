@@ -39,15 +39,10 @@ const App = () => (
           component={InfoPage}
         />
         <Route
-<<<<<<< HEAD
           path="/view"
           component={ViewPage}
         />
         
-=======
-          path="/count"
-          component={CountPage} />
->>>>>>> a95f9fd96342f6c6f7ef741e09bf154cc082e9d1
         {/* OTHERWISE (no path!) */}
         <Route render={() => <h1>404</h1>} />
 

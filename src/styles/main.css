@@ -60,6 +60,9 @@ input[type="submit"] {
   width: 100%;
   border-radius: 0px;
 }
+.viewbutton {
+    background-color: #00acb0;
+}
 
 ul {
     list-style-type: none;

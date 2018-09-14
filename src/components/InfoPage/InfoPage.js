@@ -16,13 +16,16 @@ class InfoPage extends Component {
     super(props)
     this.state = {
       itemToDelete: '',
+  
     }
 
   }
 
   componentDidMount() {
     this.props.dispatch({ type: USER_ACTIONS.FETCH_USER });
-    this.getShelf();
+    //this.getShelf();
+    // this.getById();
+    this.props.dispatch({ type: 'BY_ID', payload: this.props.match.params.id })
   }
 
   componentDidUpdate() {
@@ -47,12 +50,24 @@ class InfoPage extends Component {
     this.props.dispatch({ type: 'FETCH_SHELF' })
   }
 
+
+
+  getById = () => {
+  //  const id = this.props.user.id
+  this.setState({
+    id: this.props.user.id,
+  })
+    console.log('in getById, user id: ',  this.state.id)
+    this.props.dispatch({ type: 'BY_ID', payload: this.state.id })
+  }
+
   render() {
     let content = null;
 
     if (this.props.user.userName) {
       content = (
         <div>
+          <p>{JSON.stringify(this.props.match.params.id)}</p>
           <ShelfForm />
           <br />
           <br />
@@ -72,7 +87,7 @@ class InfoPage extends Component {
                   <tr key={item.id}>
                     <td>{item.username}</td>
                     <td>{item.description}</td>
-                    <td> <img src={item.image_url} alt={item.description}/></td>
+                    <td> <img src={item.image_url} alt={item.description} /></td>
                     <td><button onClick={() => this.deleteItem(item.id)}>Delete</button></td>
                   </tr>
                 )
@@ -81,8 +96,6 @@ class InfoPage extends Component {
             </tbody>
 
           </table>
-
-          
         </div>
       );
     }

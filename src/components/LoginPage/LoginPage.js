@@ -3,6 +3,9 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { triggerLogin, formError, clearError } from '../../redux/actions/loginActions';
 import { USER_ACTIONS } from '../../redux/actions/userActions';
+import Button from '@material-ui/core/Button';
+import Input from '@material-ui/core/Input';
+import InputLabel from '@material-ui/core/InputLabel';
 
 
 const mapStateToProps = state => ({
@@ -65,36 +68,42 @@ class LoginPage extends Component {
     return (
       <div>
         {this.renderAlert()}
+        <Link to="/view">
+          View Shelf
+        </Link>
         <form onSubmit={this.login}>
           <h1>Login</h1>
           <div>
-            <label htmlFor="username">
+            <InputLabel htmlFor="username">
               Username:
-              <input
+              <Input
                 type="text"
                 name="username"
                 value={this.state.username}
                 onChange={this.handleInputChangeFor('username')}
               />
-            </label>
+            </InputLabel>
           </div>
           <div>
-            <label htmlFor="password">
+            <InputLabel htmlFor="password">
               Password:
-              <input
+              <Input
                 type="password"
                 name="password"
                 value={this.state.password}
                 onChange={this.handleInputChangeFor('password')}
               />
-            </label>
+            </InputLabel>
           </div>
           <div>
-            <input
+            <Button
+              variant="contained"
+              color="primary"
               type="submit"
               name="submit"
-              value="Log In"
-            />
+            >
+            Log In
+            </Button>
             <Link to="/register">Register</Link>
           </div>
         </form>

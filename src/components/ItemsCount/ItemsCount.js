@@ -8,7 +8,6 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 
-
 const mapStateToProps = state => ({
     shelf: state.shelf,
 });
@@ -17,7 +16,7 @@ class ItemsCount extends Component {
     componentDidMount() {
         this.getCount();
     }
-
+  ;
     getCount = () => {
         axios({
             method: 'GET',
@@ -29,6 +28,7 @@ class ItemsCount extends Component {
             console.log('Error getting count', error);
         })
     }
+
     render() {
         return (
             <Paper>

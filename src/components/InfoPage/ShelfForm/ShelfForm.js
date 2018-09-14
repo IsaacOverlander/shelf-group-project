@@ -27,6 +27,7 @@ class ShelfForm extends Component {
     }
     getImageURL = (result) => {
         console.log('filestack submitted', result.filesUploaded);
+        alert('Image added!'); 
         this.setState({
             ...this.state,
             image_url: result.filesUploaded[0].url 
@@ -60,7 +61,6 @@ class ShelfForm extends Component {
                             options={options}
                             onSuccess={this.getImageURL}
                             />
-                    <input type="submit" />
                     <Button className="float-right" variant="contained" color="primary" type="submit">Add Item</Button>
                 </form>
             </div>

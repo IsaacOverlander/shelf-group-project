@@ -5,8 +5,10 @@ const router = express.Router();
 /**
  * Get all of the items on the shelf
  */
+
+ 
 router.get('/', (req, res) => {
-    if(req.isAuthenticated()){
+    // if(req.isAuthenticated()){
         const query = `SELECT "item".*, "person"."id" as person_id, "person"."username"
                         FROM  "item"
                         JOIN "person"
@@ -17,10 +19,11 @@ router.get('/', (req, res) => {
             console.log('Error getting shelf items', error);
             res.sendStatus(500);
         });
-    } else {
-        res.sendStatus(403);
-    }
+    // } else {
+    //     res.sendStatus(403);
+    // }
 });
+
 
 
 /**
@@ -45,10 +48,10 @@ router.post('/', (req, res) => {
 /**
  * Delete an item if it's something the logged in user added
  */
-router.delete('/:id', (req, res) => {
+router.delete('/', (req, res) => {
     if(req.isAuthenticated()){
         const query = `DELETE FROM "item" WHERE "id" = $1;`;
-        pool.query(query, [req.params.id]).then((results) => {
+        pool.query(query, [req.query.id]).then((results) => {
             res.sendStatus(200); 
         }).catch((error) => {
             console.log(`Error deleting item with id of: ${req.params.id}`, error);
@@ -75,7 +78,7 @@ router.get('/count', (req, res) => {
     if (req.isAuthenticated()){
     const query = `SELECT COUNT ("item"."description"), "person"."username"
     FROM  "item"
-    JOIN "person"
+    RIGHT JOIN "person"
     ON "person"."id" = "item"."person_id"
     GROUP BY "person"."id";`;
     pool.query(query).then((results) => {
@@ -87,6 +90,28 @@ router.get('/count', (req, res) => {
         res.sendStatus(403); 
     }
 });
+
+
+router.get('/:id', (req, res) => {
+    if(req.isAuthenticated()){
+        const query = `SELECT "item".*, "person"."id" as person_id, "person"."username"
+                        FROM  "item"
+                        JOIN "person"
+                        ON "person"."id" = "item"."person_id"
+                        WHERE "person"."id" = $1;`;
+        pool.query(query, [req.params.id]).then((results) => {
+            res.send(results.rows); 
+        }).catch((error) => {
+            console.log('Error getting items by user id', error);
+            res.sendStatus(500);
+        });
+    } else {
+        res.sendStatus(403);
+    }
+});
+
+
+
 
 
 /**

@@ -11,6 +11,7 @@ import LoginPage from './components/LoginPage/LoginPage';
 import RegisterPage from './components/RegisterPage/RegisterPage';
 import UserPage from './components/UserPage/UserPage';
 import InfoPage from './components/InfoPage/InfoPage';
+import ViewPage from './components/ViewPage/ViewPage';
 import CountPage from './components/ItemsCount/ItemsCount'; 
 
 import './styles/main.css';
@@ -34,8 +35,17 @@ const App = () => (
           component={UserPage}
         />
         <Route
-          path="/info"
+          exact path="/info"
           component={InfoPage}
+        />
+
+        <Route
+          path="/info/:id"
+          component={InfoPage}
+        />
+        <Route
+          path="/view"
+          component={ViewPage}
         />
         <Route
           path="/count"

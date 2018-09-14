@@ -2,6 +2,10 @@ body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
 }
 
+#shelf-form {
+    height: 100px;
+}
+
 .instructions h1 {
     font-size: 24px;
     font-weight: 700;
@@ -29,6 +33,10 @@ input {
 
 input[type="submit"] {
     margin: 10px;
+}
+
+.float-right {
+    float: right;
 }
 
 .message {
@@ -70,7 +78,7 @@ li a {
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
-
+    color: black;
 }
 
 /* Change the link color to #111 (black) on hover */

@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import axios from 'axios';
 import ReactFilestack from 'filestack-react'; 
+import Button from '@material-ui/core/Button';
+import Input from '@material-ui/core/Input';
+import InputLabel from '@material-ui/core/InputLabel';
 
 const mapStateToProps = reduxState => ({
     reduxState
@@ -15,7 +17,7 @@ const options = {
   };
 
 class ShelfForm extends Component {
-    // ** FUNCTIONS ** 
+    
     constructor() {
         super();
         this.state = {
@@ -39,32 +41,18 @@ class ShelfForm extends Component {
     }
     handleSubmit = (event) => {
         event.preventDefault();
-        axios({
-           method: 'POST',
-           url: '/api/shelf',
-           data: this.state 
-        }).then((response) => {
-            console.log('Item was added');
-            // GET function goes here
-        }).catch((error) => {
-            console.log(error);
-            alert('there was an error adding your item');
-        });
+            this.props.dispatch({type: 'ADD_ITEM', payload: this.state});
     };
 
-    // ** FUNCTIONS **
     render() {
         return (
             <div>
-                {/* // ** FORM ** */}
+                <form id="shelf-form" onSubmit={this.handleSubmit}>
 
-                <form onSubmit={this.handleSubmit}>
-
-                    <label>Description:</label>
-                    <input type="text" name="description" value={this.state.description} onChange={this.handleChange} />
+                    <InputLabel>Description:</InputLabel>
+                    <Input type="text" name="description" value={this.state.description} onChange={this.handleChange} />
                     <br />
-                    <label>Image:</label>
-                    {/* <input type="text" name="image_url" value={this.state.image_url} onChange={this.handleChange} /> */}
+                    <InputLabel>Image:</InputLabel>
                     <ReactFilestack
                             apikey='ACGkY2eEqTDG52A5eOG3Az'
                             buttonText="Upload an Image"
@@ -72,10 +60,8 @@ class ShelfForm extends Component {
                             onSuccess={this.getImageURL}
                             />
                     <input type="submit" />
+                    <Button className="float-right" variant="contained" color="primary" type="submit">Add Item</Button>
                 </form>
-
-
-                {/* // ** FORM ** */}
             </div>
         )
     }

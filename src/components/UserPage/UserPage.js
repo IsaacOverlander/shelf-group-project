@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import Button from '@material-ui/core/Button';
 
 import Nav from '../../components/Nav/Nav';
 
@@ -38,11 +39,13 @@ class UserPage extends Component {
             Welcome, { this.props.user.userName }!
           </h1>
           <p>Your ID is: {this.props.user.id}</p>
-          <button
+          <Button 
+            variant="contained" 
+            color="primary"
             onClick={this.logout}
           >
             Log Out
-          </button>
+          </Button>
         </div>
       );
     }

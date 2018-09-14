@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import ShelfForm from './ShelfForm/ShelfForm.js';
-import axios from 'axios';
+// import axios from 'axios';
 
 import Nav from '../../components/Nav/Nav';
 import { USER_ACTIONS } from '../../redux/actions/userActions';
@@ -16,28 +16,26 @@ class InfoPage extends Component {
     super(props)
     this.state = {
       itemToDelete: '',
+  
     }
 
   }
 
   componentDidMount() {
     this.props.dispatch({ type: USER_ACTIONS.FETCH_USER });
+    //this.getShelf();
+    // this.getById();
+    this.props.dispatch({ type: 'BY_ID', payload: this.props.match.params.id })
   }
 
   componentDidUpdate() {
     if (!this.props.user.isLoading && this.props.user.userName === null) {
       this.props.history.push('home');
     }
-    this.getShelf();
   }
 
   deleteItem = (id) => {
-    axios({
-      method: 'DELETE',
-      url: '/api/shelf/'+ id
-    }).then((response)=>{
-      this.getShelf();
-    })
+    this.props.dispatch({ type: 'DELETE_ITEM', payload: id })
 
   }
 
@@ -49,14 +47,18 @@ class InfoPage extends Component {
   }
 
   getShelf() {
-    axios({
-      method: 'GET',
-      url: '/api/shelf'
-    }).then((response) => {
-      const action = { type: 'SET_SHELF', payload: response.data }
-      this.props.dispatch(action)
+    this.props.dispatch({ type: 'FETCH_SHELF' })
+  }
 
-    });
+
+
+  getById = () => {
+  //  const id = this.props.user.id
+  this.setState({
+    id: this.props.user.id,
+  })
+    console.log('in getById, user id: ',  this.state.id)
+    this.props.dispatch({ type: 'BY_ID', payload: this.state.id })
   }
 
   render() {
@@ -65,13 +67,12 @@ class InfoPage extends Component {
     if (this.props.user.userName) {
       content = (
         <div>
+          <p>{JSON.stringify(this.props.match.params.id)}</p>
           <ShelfForm />
           <br />
           <br />
           Shelf Items:
           <table>
-          <br />
-          <br />
             <thead>
               <tr>
                 <th>User Name</th>
@@ -83,10 +84,10 @@ class InfoPage extends Component {
             <tbody>
               {this.props.shelf.shelfReducer.map((item) => {
                 return (
-                  <tr>
-                    <td key={item.id}>{item.username}</td>
-                    <td key={item.id}>{item.description}</td>
-                    <td key={item.id}> <img src={item.image_url} /></td>
+                  <tr key={item.id}>
+                    <td>{item.username}</td>
+                    <td>{item.description}</td>
+                    <td> <img src={item.image_url} alt={item.description} /></td>
                     <td><button onClick={() => this.deleteItem(item.id)}>Delete</button></td>
                   </tr>
                 )
@@ -95,8 +96,6 @@ class InfoPage extends Component {
             </tbody>
 
           </table>
-
-          
         </div>
       );
     }

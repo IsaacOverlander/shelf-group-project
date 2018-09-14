@@ -78,7 +78,7 @@ router.get('/count', (req, res) => {
     if (req.isAuthenticated()){
     const query = `SELECT COUNT ("item"."description"), "person"."username"
     FROM  "item"
-    JOIN "person"
+    RIGHT JOIN "person"
     ON "person"."id" = "item"."person_id"
     GROUP BY "person"."id";`;
     pool.query(query).then((results) => {

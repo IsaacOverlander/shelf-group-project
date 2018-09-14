@@ -92,6 +92,28 @@ router.get('/count', (req, res) => {
 });
 
 
+router.get('/:id', (req, res) => {
+    if(req.isAuthenticated()){
+        const query = `SELECT "item".*, "person"."id" as person_id, "person"."username"
+                        FROM  "item"
+                        JOIN "person"
+                        ON "person"."id" = "item"."person_id"
+                        WHERE "person"."id" = $1;`;
+        pool.query(query, [req.params.id]).then((results) => {
+            res.send(results.rows); 
+        }).catch((error) => {
+            console.log('Error getting items by user id', error);
+            res.sendStatus(500);
+        });
+    } else {
+        res.sendStatus(403);
+    }
+});
+
+
+
+
+
 /**
  * Return a specific item by id
  */

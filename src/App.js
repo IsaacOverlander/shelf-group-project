@@ -33,7 +33,12 @@ const App = () => (
           component={UserPage}
         />
         <Route
-          path="/info"
+          exact path="/info"
+          component={InfoPage}
+        />
+
+        <Route
+          path="/info/:id"
           component={InfoPage}
         />
         {/* OTHERWISE (no path!) */}

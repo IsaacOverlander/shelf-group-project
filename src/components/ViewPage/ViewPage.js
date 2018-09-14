@@ -23,10 +23,10 @@ class ViewPage extends Component {
         this.props.dispatch({ type: 'FETCH_SHELF' });
     }
 
-    handleLoginChange() {
+    handleLoginChange = ()  => {
         this.props.history.push('home');
     }
-    handleRegisterChange() {
+    handleRegisterChange = () => {
         this.props.history.push('register');
     }
 
@@ -35,7 +35,7 @@ class ViewPage extends Component {
         return (
             <div>
 
-                Shelf Items:
+                Shelf Club Items:
                 <Paper>
                     <Table>
                         <TableHead>
@@ -64,7 +64,9 @@ class ViewPage extends Component {
                     <span>
                         <Button className="viewbutton"
                          onClick={this.handleLoginChange}
-                         color="primary">
+                         color="primary"
+                         variant="contained"
+                         >
                             Home
                     </Button>
                     </span>
@@ -78,6 +80,9 @@ class ViewPage extends Component {
                         <Button className="viewbutton"
                          onClick={this.handleRegisterChange}
                          color="primary"
+                         variant="contained"
+                         secondary-color="red"
+
                          >
                             Registration
                     </Button>

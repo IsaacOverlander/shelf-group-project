@@ -75,6 +75,10 @@ li {
     float: left;
 }
 
+.viewbutton {
+    background-color: blue;
+}
+
 li a {
     display: block;
     color: white;
@@ -89,3 +93,4 @@ li a:hover {
     text-decoration: underline;
     color: #eee;
 }
+

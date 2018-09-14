@@ -8,7 +8,7 @@ const router = express.Router();
 
  
 router.get('/', (req, res) => {
-    if(req.isAuthenticated()){
+    // if(req.isAuthenticated()){
         const query = `SELECT "item".*, "person"."id" as person_id, "person"."username"
                         FROM  "item"
                         JOIN "person"
@@ -19,9 +19,9 @@ router.get('/', (req, res) => {
             console.log('Error getting shelf items', error);
             res.sendStatus(500);
         });
-    } else {
-        res.sendStatus(403);
-    }
+    // } else {
+    //     res.sendStatus(403);
+    // }
 });
 
 

@@ -34,6 +34,7 @@ class ShelfForm extends Component {
         })
         console.log(this.state.image_url); 
     }
+    
     handleChange = (event) => {
         this.setState({
             ...this.state,

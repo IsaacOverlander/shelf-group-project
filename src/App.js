@@ -12,6 +12,7 @@ import RegisterPage from './components/RegisterPage/RegisterPage';
 import UserPage from './components/UserPage/UserPage';
 import InfoPage from './components/InfoPage/InfoPage';
 import ViewPage from './components/ViewPage/ViewPage';
+import CountPage from './components/ItemsCount/ItemsCount'; 
 
 import './styles/main.css';
 
@@ -38,10 +39,15 @@ const App = () => (
           component={InfoPage}
         />
         <Route
+<<<<<<< HEAD
           path="/view"
           component={ViewPage}
         />
         
+=======
+          path="/count"
+          component={CountPage} />
+>>>>>>> a95f9fd96342f6c6f7ef741e09bf154cc082e9d1
         {/* OTHERWISE (no path!) */}
         <Route render={() => <h1>404</h1>} />
 

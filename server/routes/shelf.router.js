@@ -48,10 +48,10 @@ router.post('/', (req, res) => {
 /**
  * Delete an item if it's something the logged in user added
  */
-router.delete('/:id', (req, res) => {
+router.delete('/', (req, res) => {
     if(req.isAuthenticated()){
         const query = `DELETE FROM "item" WHERE "id" = $1;`;
-        pool.query(query, [req.params.id]).then((results) => {
+        pool.query(query, [req.query.id]).then((results) => {
             res.sendStatus(200); 
         }).catch((error) => {
             console.log(`Error deleting item with id of: ${req.params.id}`, error);
@@ -75,7 +75,20 @@ router.put('/:id', (req, res) => {
  * they have added to the shelf
  */
 router.get('/count', (req, res) => {
-
+    if (req.isAuthenticated()){
+    const query = `SELECT COUNT ("item"."description"), "person"."username"
+    FROM  "item"
+    RIGHT JOIN "person"
+    ON "person"."id" = "item"."person_id"
+    GROUP BY "person"."id";`;
+    pool.query(query).then((results) => {
+        res.send(results.rows);
+    }).catch((error) => {
+        console.log('Error getting count', error); 
+    });
+    } else {
+        res.sendStatus(403); 
+    }
 });
 
 

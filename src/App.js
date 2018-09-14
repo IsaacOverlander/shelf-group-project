@@ -46,7 +46,7 @@ const App = () => (
           path="/count"
           component={CountPage}
         />
-        
+
         {/* OTHERWISE (no path!) */}
         <Route render={() => <h1>404</h1>} />
 

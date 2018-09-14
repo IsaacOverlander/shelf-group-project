@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import ShelfForm from './ShelfForm/ShelfForm.js';
-// import axios from 'axios';
-
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
 import Nav from '../../components/Nav/Nav';
 import { USER_ACTIONS } from '../../redux/actions/userActions';
 
@@ -16,14 +20,14 @@ class InfoPage extends Component {
     super(props)
     this.state = {
       itemToDelete: '',
-  
+
     }
 
   }
 
   componentDidMount() {
     this.props.dispatch({ type: USER_ACTIONS.FETCH_USER });
-    //this.getShelf();
+    this.getShelf();
     // this.getById();
     this.props.dispatch({ type: 'BY_ID', payload: this.props.match.params.id })
   }
@@ -53,11 +57,11 @@ class InfoPage extends Component {
 
 
   getById = () => {
-  //  const id = this.props.user.id
-  this.setState({
-    id: this.props.user.id,
-  })
-    console.log('in getById, user id: ',  this.state.id)
+    //  const id = this.props.user.id
+    this.setState({
+      id: this.props.user.id,
+    })
+    console.log('in getById, user id: ', this.state.id)
     this.props.dispatch({ type: 'BY_ID', payload: this.state.id })
   }
 
@@ -72,30 +76,30 @@ class InfoPage extends Component {
           <br />
           <br />
           Shelf Items:
-          <table>
-            <thead>
-              <tr>
-                <th>User Name</th>
-                <th>Description</th>
-                <th>Image</th>
-                <th>Delete</th>
-              </tr>
-            </thead>
-            <tbody>
-              {this.props.shelf.shelfReducer.map((item) => {
-                return (
-                  <tr key={item.id}>
-                    <td>{item.username}</td>
-                    <td>{item.description}</td>
-                    <td> <img src={item.image_url} alt={item.description} /></td>
-                    <td><button onClick={() => this.deleteItem(item.id)}>Delete</button></td>
-                  </tr>
-                )
-              })}
-
-            </tbody>
-
-          </table>
+          <Paper>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell>User Name</TableCell>
+                  <TableCell>Description</TableCell>
+                  <TableCell>Image</TableCell>
+                  <TableCell>Delete</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {this.props.shelf.shelfReducer.map((item) => {
+                  return (
+                    <TableRow key={item.id}>
+                      <TableCell>{item.username}</TableCell>
+                      <TableCell>{item.description}</TableCell>
+                      <TableCell> <img src={item.image_url} alt={item.description} height="100px" /></TableCell>
+                      <TableCell><button onClick={() => this.deleteItem(item.id)}>Delete</button></TableCell>
+                    </TableRow>
+                  )
+                })}
+              </TableBody>
+            </Table>
+          </Paper>
         </div>
       );
     }
